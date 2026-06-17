@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ocr-model"
+version = "0.1.0"
+description = "KServe OCR Model Service using Tesseract"
+authors = ["VLTSankalpa <wltsankalpa@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+kserve = "^0.14.1"
+pillow = "^11.1.0"
+pytesseract = "^0.3.13"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

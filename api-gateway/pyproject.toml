@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "api-gateway"
+version = "0.1.0"
+description = "FastAPI Gateway Service for OCR Model"
+authors = ["VLTSankalpa <wltsankalpa@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+fastapi = {extras = ["standard"], version = "^0.137.1"}
+requests = "^2.32.3"
+python-multipart = "^0.0.20"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
