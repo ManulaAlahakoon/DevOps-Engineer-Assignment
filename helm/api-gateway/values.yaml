@@ -1,0 +1,19 @@
+# values.yaml
+
+image:
+  repository: manulaalahakoon/api-gateway
+  tag: latest
+  pullPolicy: Always
+
+replicaCount: 1
+
+service:
+  type: NodePort   
+  port: 8001    
+
+# The URL of the OCR model service inside Kubernetes
+# This uses Kubernetes internal DNS:
+# http://SERVICE-NAME.NAMESPACE.svc.cluster.local:PORT
+kserveUrl: "http://ocr-model-service.ocr.svc.cluster.local:8080/v2/models/ocr-model/infer"
+
+imagePullSecret: dockerhub-secret

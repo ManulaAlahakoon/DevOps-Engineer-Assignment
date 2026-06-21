@@ -1,0 +1,41 @@
+# deployment.yaml
+
+#   The gateway needs to know the URL of the ocr-model service.
+#   We pass that URL as an environment variable from the ConfigMap.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: ocr
+  labels:
+    app: api-gateway
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      # Use the Docker Hub secret to pull our private image
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+
+      containers:
+        - name: api-gateway
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - containerPort: 8001
+          env:
+            - name: KSERVE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: api-gateway-config   # the ConfigMap name
+                  key: KSERVE_URL            # the key inside the ConfigMap
+
+    

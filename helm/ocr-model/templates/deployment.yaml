@@ -1,0 +1,35 @@
+# deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocr-model                
+  namespace: ocr                   
+  labels:
+    app: ocr-model                 # label used to identify this deployment
+spec:
+  replicas: {{ .Values.replicaCount }}  
+  selector:
+    matchLabels:
+      app: ocr-model               # find pods with this label
+  template:
+    metadata:
+      labels:
+        app: ocr-model             # label applied to each pod
+      annotations:
+        # These annotations tell Prometheus to scrape metrics from this pod
+        prometheus.io/scrape: "true"   
+        prometheus.io/port: "8080"     # scrape on port 8080
+        prometheus.io/path: "/metrics" # scrape at this URL path
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+
+      containers:
+        - name: ocr-model
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - containerPort: 8080  
+

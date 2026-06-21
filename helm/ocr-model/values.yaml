@@ -1,0 +1,19 @@
+# values.yaml
+
+# Docker image settings
+image:
+  repository: manulaalahakoon/ocr-model  
+  tag: latest
+  pullPolicy: Always  
+
+# How many copies of the service to run
+replicaCount: 1       
+
+# Service settings 
+service:
+  type: ClusterIP      
+  port: 8080          
+
+
+# Docker Hub credentials secret name (for pulling private images)
+imagePullSecret: dockerhub-secret

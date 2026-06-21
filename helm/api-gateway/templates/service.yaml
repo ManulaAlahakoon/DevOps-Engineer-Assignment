@@ -1,0 +1,21 @@
+# service.yaml
+
+#   Gives the api-gateway a stable address inside Kubernetes.
+#   We use NodePort here so we can also access it from our browser
+#   using: minikube service api-gateway-service -n ocr --url
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-service
+  namespace: ocr
+  labels:
+    app: api-gateway
+spec:
+  type: {{ .Values.service.type }}  
+  selector:
+    app: api-gateway
+  ports:
+    - port: 8001
+      targetPort: 8001
+      protocol: TCP

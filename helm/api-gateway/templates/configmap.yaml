@@ -1,0 +1,13 @@
+# configmap.yaml
+
+#   Stores the KSERVE_URL so the api-gateway knows where
+#   to find the OCR model inside Kubernetes.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-gateway-config
+  namespace: ocr
+data:
+  # URL of the OCR model service inside Kubernetes
+  KSERVE_URL: {{ .Values.kserveUrl }}
