@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+
+metadata:
+  name: ocr-project
+  namespace: argocd
+
+spec:
+  description: OCR application project
+
+  sourceRepos:
+    - https://github.com/ManulaAlahakoon/DevOps-Engineer-Assignment.git
+
+  destinations:
+    - namespace: ocr
+      server: https://kubernetes.default.svc

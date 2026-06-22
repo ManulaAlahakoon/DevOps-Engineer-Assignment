@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: ocr-applications
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: ocr-model
+            path: helm/ocr-model
+
+          - name: api-gateway
+            path: helm/api-gateway
+
+  template:
+    metadata:
+      name: '{{name}}'
+
+    spec:
+      project: ocr-project
+
+      source:
+        repoURL: https://github.com/ManulaAlahakoon/DevOps-Engineer-Assignment.git
+        targetRevision: main
+        path: '{{path}}'
+
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: ocr
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
