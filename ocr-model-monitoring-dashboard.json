@@ -1,0 +1,179 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "panels": [
+    {
+      "id": 1,
+      "title": "Total Inference Requests",
+      "type": "stat",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "request_predict_seconds_count",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": 2,
+      "title": "Average Inference Latency (s)",
+      "type": "stat",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "request_predict_seconds_sum / request_predict_seconds_count",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      }
+    },
+    {
+      "id": 3,
+      "title": "P95 Prediction Latency",
+      "type": "timeseries",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(request_predict_seconds_bucket[5m])) by (le))",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      }
+    },
+    {
+      "id": 4,
+      "title": "CPU Usage",
+      "type": "timeseries",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "rate(process_cpu_seconds_total[5m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 4
+      }
+    },
+    {
+      "id": 5,
+      "title": "Memory Usage",
+      "type": "timeseries",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      }
+    },
+    {
+      "id": 6,
+      "title": "Average Preprocess Latency",
+      "type": "stat",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "request_preprocess_seconds_sum / request_preprocess_seconds_count",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      }
+    },
+    {
+      "id": 7,
+      "title": "Average Postprocess Latency",
+      "type": "stat",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "request_postprocess_seconds_sum / request_postprocess_seconds_count",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      }
+    },
+    {
+      "id": 8,
+      "title": "Model Uptime (seconds)",
+      "type": "stat",
+      "datasource": "PROMETHEUS_DATASOURCE",
+      "targets": [
+        {
+          "expr": "time() - process_start_time_seconds",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      }
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [
+    "ocr",
+    "kserve",
+    "prometheus"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timezone": "",
+  "title": "OCR Model Monitoring Dashboard",
+  "version": 1
+}
